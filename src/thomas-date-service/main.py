@@ -1,4 +1,14 @@
 from datetime import datetime
+import flask
 
-now = datetime.now()
-print(f'Date: {now}')
+
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return f'''<h1>Date: {datetime.now()}</h1>'''
+
+
+app.run()
