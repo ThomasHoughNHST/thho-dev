@@ -11,4 +11,6 @@ def home():
     return f'''<h1>Date: {datetime.now()}</h1>'''
 
 
-app.run()
+if __name__ == "__main__":
+    app.run()
+
