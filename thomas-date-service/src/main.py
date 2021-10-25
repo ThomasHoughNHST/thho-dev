@@ -20,7 +20,7 @@ if __name__ == "__main__":
         username='root',
         password='example'
     )
-    db = client.thho
+    db = client.local
     names = ['Kitchen', 'Animal', 'State', 'Tastey', 'Big', 'City', 'Fish', 'Pizza', 'Goat', 'Salty', 'Sandwich',
              'Lazy', 'Fun']
     company_type = ['LLC', 'Inc', 'Company', 'Corporation']
