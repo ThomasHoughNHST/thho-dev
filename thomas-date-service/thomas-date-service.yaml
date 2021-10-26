@@ -10,6 +10,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
 
   mongo-express:
     image: mongo-express
@@ -24,9 +26,13 @@ services:
       - mongo
 
   date-service:
-    image: thomas-date-service:1.1
+    image: thomas-date-service:1
     restart: always
     ports:
       - 8080:5000
     depends_on:
       - mongo-express
+
+volumes:
+  mongo-data:
+    driver: local
