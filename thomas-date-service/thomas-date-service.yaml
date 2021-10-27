@@ -26,7 +26,7 @@ services:
       - mongo
 
   date-service:
-    image: thomas-date-service:1
+    image: thomashough/dev:thomas-date-service
     restart: always
     ports:
       - 8080:5000
