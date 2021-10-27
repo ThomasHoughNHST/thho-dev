@@ -9,7 +9,7 @@ app.config["DEBUG"] = True
 
 @app.route('/')
 def home():
-    return f'''<h1>Date: {datetime.now()}</h1>'''
+    return f'''<h1>Date: {datetime.now()}</h1><p>{document}</p>'''
 
 
 if __name__ == "__main__":
@@ -20,16 +20,9 @@ if __name__ == "__main__":
         password='example'
     )
     db = client.local
-    brand = ['Boss', 'MXR', 'Ibanez']
-    model = ['BD-2', 'Distortion +', 'AD-9']
-    pedal_type = ['Drive', 'Drive', 'Delay']
-
-    for i in range(0, len(brand)):
-        pedal = {
-            'brand': brand[i],
-            'model': model[i],
-            'pedal_type': pedal_type[i]
-        }
-        result = db.pedals.insert_one(pedal)
+    collection = db['pedals']
+    cursor = collection.find({})
+    for document in cursor:
+        print(document)
 
     app.run()
