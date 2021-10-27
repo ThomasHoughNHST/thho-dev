@@ -1,0 +1,2 @@
+docker tag thomas-date-service:1 thomashough/dev/thomas-date-service
+docker push thomashough/dev:thomas-date-service
