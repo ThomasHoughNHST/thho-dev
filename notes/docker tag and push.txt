@@ -1,2 +1,8 @@
-docker tag thomas-date-service:1 thomashough/dev/thomas-date-service
-docker push thomashough/dev:thomas-date-service
+REPOSITORY            TAG       IMAGE ID       CREATED        SIZE
+tds                   1         8133ce5b1a20   17 hours ago   129MB
+thomashough/dev/tds   latest    8133ce5b1a20   17 hours ago   129MB
+
+
+docker tag tds:1 thomashough/dev:tds.1
+docker push thomashough/dev:tds.1
+
