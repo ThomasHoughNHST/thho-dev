@@ -1,7 +1,5 @@
 import re
 import pandas as pd
-from nhst_airflow import get_logger
-logger = get_logger(__name__)
 
 
 data = [[1, 'HOUSTON TX 77055'], [2, 'HOUSTON TX 77253 3128'], [3, 'HOUSTON TX 77060 HD 99'],
@@ -10,6 +8,7 @@ data = [[1, 'HOUSTON TX 77055'], [2, 'HOUSTON TX 77253 3128'], [3, 'HOUSTON TX 7
 address_history = pd.DataFrame(data=data, columns=['id', 'addressextension4'])
 address_history['state_code'] = None
 address_history['zip_code'] = None
+address_history['city'] = None
 
 
 pattern1 = '\\d{5}\\s{1}\\D{2}'
@@ -27,58 +26,68 @@ for i, row in address_history.iterrows():
         state_code = str(state_code)[::-1]
         zip_code = a[0:6]
         zip_code = str(zip_code)[::-1]
+        city = a[9::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
+        address_history.at[i, 'city'] = city
     elif re.match(pattern2, a):
         state_code = a[10:13]
         state_code = str(state_code)[::-1]
         zip_code = a[5:11]
         zip_code = str(zip_code)[::-1]
+        city = a[14::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
-    elif re.match(pattern3, a):
+        address_history.at[i, 'city'] = city
+    elif re.match(pattern3, a) or re.match(pattern4, a):
         state_code = a[11:14]
         state_code = str(state_code)[::-1]
         zip_code = a[6:12]
         zip_code = str(zip_code)[::-1]
+        city = a[15::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
-    elif re.match(pattern4, a):
-        state_code = a[11:14]
-        state_code = str(state_code)[::-1]
-        zip_code = a[6:12]
-        zip_code = str(zip_code)[::-1]
-        address_history.at[i, 'state_code'] = state_code
-        address_history.at[i, 'zip_code'] = zip_code
+        address_history.at[i, 'city'] = city
     elif re.match(pattern5, a):
         state_code = a[14:17]
         state_code = str(state_code)[::-1]
         zip_code = a[9:15]
         zip_code = str(zip_code)[::-1]
+        city = a[18::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
+        address_history.at[i, 'city'] = city
     elif re.match(pattern6, a):
         state_code = a[16:19]
         state_code = str(state_code)[::-1]
         zip_code = a[11:17]
         zip_code = str(zip_code)[::-1]
+        city = a[20::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
+        address_history.at[i, 'city'] = city
     elif re.fullmatch(pattern7, a):
         address_history.at[i, 'state_code'] = row['addressextension4']
         address_history.at[i, 'zip_code'] = row['zip_code']
+        address_history.at[i, 'city'] = row['city']
     elif re.match(pattern8, a):
         state_code = a[9:12]
         state_code = str(state_code)[::-1]
         zip_code = a[4:10]
         zip_code = str(zip_code)[::-1]
+        city = a[13::]
+        city = str(city)[::-1]
         address_history.at[i, 'state_code'] = state_code
         address_history.at[i, 'zip_code'] = zip_code
+        address_history.at[i, 'city'] = city
     else:
         address_history.at[i, 'state_code'] = row['state_code']
         address_history.at[i, 'zip_code'] = row['zip_code']
+        address_history.at[i, 'city'] = row['city']
 
-logger.info(address_history)
-
-
-
+print(address_history)
