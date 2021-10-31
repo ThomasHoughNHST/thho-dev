@@ -9,7 +9,7 @@ app.config["DEBUG"] = True
 
 @app.route('/')
 def home():
-    return f'''<h1>Date: {datetime.now()}</h1>'''
+    return f'''<h3>Date: {datetime.now()}</h3>'''
 
 
 if __name__ == "__main__":
