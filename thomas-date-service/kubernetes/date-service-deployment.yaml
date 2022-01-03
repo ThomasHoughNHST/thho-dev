@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: date-service
+  labels:
+    app: date-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: date-service
+  template:
+    metadata:
+      labels:
+        app: date-service
+    spec:
+      containers:
+        - name: date-service
+          image: thomashough/dev:thomas-date-service.3.1
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: date-service-service
+spec:
+  selector:
+    app: date-service
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30001
