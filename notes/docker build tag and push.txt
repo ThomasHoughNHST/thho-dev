@@ -1,0 +1,8 @@
+docker build . -t thomas-date-service:3.2
+
+REPOSITORY                    TAG       IMAGE ID       CREATED              SIZE
+thomas-date-service           3.2       e61c4648be63   About a minute ago   128MB
+
+docker tag thomas-date-service:3.2 thomashough/dev:thomas-date-service.3.2
+docker push thomashough/dev:thomas-date-service.3.2
+

@@ -1,5 +1,4 @@
 from datetime import datetime
-from pymongo import MongoClient
 import flask
 
 
@@ -13,16 +12,5 @@ def home():
 
 
 if __name__ == "__main__":
-
-    client = MongoClient(
-        port=27017,
-        username='root',
-        password='example'
-    )
-    db = client.local
-    collection = db['pedals']
-    cursor = collection.find({})
-    for document in cursor:
-        print(document)
 
     app.run()
