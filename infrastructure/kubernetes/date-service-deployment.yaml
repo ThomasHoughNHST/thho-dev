@@ -5,7 +5,7 @@ metadata:
   labels:
     app: date-service
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: date-service
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: date-service
-          image: thomashough/dev:thomas-date-service.3.1
+          image: thomashough/dev:thomas-date-service.3.2
           ports:
             - containerPort: 5000
 ---
