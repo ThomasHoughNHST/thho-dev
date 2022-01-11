@@ -16,8 +16,8 @@ metadata:
   name: mongofile-secret
 type: Opaque
 data:
-  azurestorageaccountname: ZG5kZXZhaXJmbG93c2E=
-  azurestorageaccountkey: u8KSZm992VjVnK7rKqljBGWVvRnM7ovrZodos6v0mKyL6zt8Lxvl5JJXiHjI0VEK34eQLt4jrDWyIz7/p0TmUg==
+  azurestorageaccountname: account_name
+  azurestorageaccountkey: account_key
 
 ---
 
