@@ -1,9 +1,9 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: mongo-sc
-provisioner: kubernetes.io/azure-disk
-reclaimPolicy: Retain
+  name: mongosc
+provisioner: file.csi.azure.com
+reclaimPolicy: Delete
 parameters:
   storageaccounttype: Premium_LRS
   kind: Managed
@@ -11,29 +11,18 @@ parameters:
 ---
 
 apiVersion: v1
-kind: Secret
-metadata:
-  name: mongofile-secret
-type: Opaque
-data:
-  azurestorageaccountname: account_name
-  azurestorageaccountkey: account_key
-
----
-
-apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv
+  name: mongopv
 spec:
   capacity:
-    storage: 5Gi
+    storage: 10Gi
   accessModes:
   - ReadWriteOnce
-  storageClassName: mongo-sc
+  storageClassName: mongosc
   azureFile:
-    secretName: mongofile-secret
-    shareName: airflow-logs
+    secretName: mongodb-secret
+    shareName: mongodb-files
     readOnly: false
   mountOptions:
   - dir_mode=0777
@@ -46,12 +35,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongo-pvc
+  name: mongopvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
-  storageClassName: mongo-sc
-  volumeName: mongo-pv
+      storage: 5Gi
+  storageClassName: mongosc
+  volumeName: mongopv
