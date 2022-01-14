@@ -19,7 +19,7 @@ spec:
     storage: 10Gi
   accessModes:
   - ReadWriteOnce
-  storageClassName: mongosc
+  storageClassName: ''
   azureFile:
     secretName: mongodb-secret
     shareName: mongodb-files
@@ -42,5 +42,5 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: mongosc
+  storageClassName: ''
   volumeName: mongopv
