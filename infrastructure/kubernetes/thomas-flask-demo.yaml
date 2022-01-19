@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thomas-flask-demo
+  labels:
+    app: thomas-flask-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thomas-flask-demo
+  template:
+    metadata:
+      labels:
+        app: thomas-flask-demo
+    spec:
+      containers:
+        - name: thomas-flask-demo
+          image: thomashough/dev:thomas-flask-demo.1.7
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+          env:
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-username
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-password
+            - name: ME_CONFIG_MONGODB_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: mongodb-configmap
+                  key: database_url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thomas-flask-demo-svc
+spec:
+  selector:
+    app: thomas-flask-demo
+  ports:
+    - port: 8080
+      targetPort: 5000
+  type: LoadBalancer
