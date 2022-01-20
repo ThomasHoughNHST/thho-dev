@@ -34,7 +34,7 @@ def get_all_tasks():
 
 @app.route("/collection")
 def get_collection():
-    client = MongoClient('mongodb://mongo:27017/dev', serverSelectionTimeoutMS=5000)
+    client = MongoClient('mongodb://localhost:27017/dev', serverSelectionTimeoutMS=5000)
     mongo_db = client.database
     collection = mongo_db.collection
     for doc in collection.find():

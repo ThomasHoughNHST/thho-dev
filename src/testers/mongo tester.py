@@ -15,6 +15,6 @@ try:
     db = client.database
     collection = db.collection
     for doc in collection.find():
-        print(doc['name'])
+        print(doc['Name'])
 except ConnectionFailure:
     print(f'Unable to get dbs')

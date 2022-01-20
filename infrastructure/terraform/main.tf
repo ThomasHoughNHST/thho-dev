@@ -19,15 +19,22 @@ data "azurerm_client_config" "current" {}
 resource "azurerm_resource_group" "resourcegroup" {
   name          = "thho_resourcegroup"
   location      = "West Europe"
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
-
 
 # Virtual network
 resource "azurerm_virtual_network" "virtualnetwork" {
   name                = "thho_vnet1"
   location            = azurerm_resource_group.resourcegroup.location
   resource_group_name = azurerm_resource_group.resourcegroup.name
-  address_space       = ["10.1.0.0/24"]
+  address_space       = ["10.1.0.0/16"]
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
 
 resource "azurerm_subnet" "vnsubnet1" {
@@ -45,6 +52,10 @@ resource "azurerm_storage_account" "filestorage" {
   location                 = azurerm_resource_group.resourcegroup.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
 
 resource "azurerm_storage_share" "inputs" {
@@ -73,6 +84,11 @@ resource "azurerm_key_vault" "keyvault" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   sku_name = "standard"
+  purge_protection_enabled = false
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
 
 resource "azurerm_key_vault_access_policy" "nhstowner" {
@@ -80,7 +96,8 @@ resource "azurerm_key_vault_access_policy" "nhstowner" {
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = data.azurerm_client_config.current.object_id
   key_permissions = ["get", "create", "delete", "list", "purge"]
-  secret_permissions = ["get", "list", "set", "delete", "recover", "backup", "restore"]
+  secret_permissions = ["get", "list", "set", "delete", "recover", "backup", "restore", "purge"]
+  certificate_permissions = ["get", "list", "delete", "recover", "backup", "restore"]
 }
 
 resource "azurerm_key_vault_access_policy" "nhstcontributor" {
@@ -88,7 +105,8 @@ resource "azurerm_key_vault_access_policy" "nhstcontributor" {
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = data.azurerm_client_config.current.object_id
   key_permissions = ["get", "create", "delete", "list", "purge"]
-  secret_permissions = ["get", "list", "set", "delete", "recover", "backup", "restore"]
+  secret_permissions = ["get", "list", "set", "delete", "recover", "backup", "restore", "purge"]
+  certificate_permissions = ["get", "list", "delete", "recover", "backup", "restore"]
 }
 
 # Database
@@ -104,6 +122,10 @@ resource "azurerm_mssql_server" "server" {
   administrator_login          = "thomasadmin"
   administrator_login_password = random_password.sqlserverpw.result
   version                      = "12.0"
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
 
 resource "azurerm_sql_active_directory_administrator" "server_add" {
@@ -117,8 +139,12 @@ resource "azurerm_sql_active_directory_administrator" "server_add" {
 resource "azurerm_mssql_database" "db" {
   name      = "thhosqldatabase"
   server_id = azurerm_mssql_server.server.id
+  max_size_gb = 2
+  tags = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged = "FALSE"
+  }
 }
-
 
 resource "azurerm_key_vault_secret" "thhoconstr" {
   name         = "thho-sql-db-connection-string"

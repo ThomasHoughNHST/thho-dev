@@ -5,7 +5,7 @@ metadata:
   labels:
     app: thomas-flask-demo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: thomas-flask-demo
@@ -16,26 +16,26 @@ spec:
     spec:
       containers:
         - name: thomas-flask-demo
-          image: thomashough/dev:thomas-flask-demo.1.7
+          image: thomashough/dev:thomas-flask-demo.1.8
           ports:
             - containerPort: 5000
           imagePullPolicy: Always
-          env:
-            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongo-root-username
-            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongodb-secret
-                  key: mongo-root-password
-            - name: ME_CONFIG_MONGODB_SERVER
-              valueFrom:
-                configMapKeyRef:
-                  name: mongodb-configmap
-                  key: database_url
+#          env:
+#            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mongodb-secret
+#                  key: mongo-root-username
+#            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mongodb-secret
+#                  key: mongo-root-password
+#            - name: ME_CONFIG_MONGODB_SERVER
+#              valueFrom:
+#                configMapKeyRef:
+#                  name: mongodb-configmap
+#                  key: database_url
 ---
 apiVersion: v1
 kind: Service
