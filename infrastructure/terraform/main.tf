@@ -36,6 +36,11 @@ resource "random_password" "sqlserverpw" {
   special = false
 }
 
+resource "random_password" "k8pw" {
+  length = 24
+  special = true
+}
+
 resource "azurerm_resource_group" "resourcegroup" {
   name          = "thho_resourcegroup"
   location      = "West Europe"
@@ -224,9 +229,23 @@ resource "azurerm_mssql_database" "db" {
 }
 
 # Kubernetes
+#resource "azuread_group" "thhoaksadminadgroup" {
+#  display_name = "thho-aksadminadgroup"
+#  security_enabled = true
+#}
+
 resource "azuread_application" "thhok8clusterapp" {
   display_name = "thhok8clusterapp"
   owners = [data.azuread_client_config.current.object_id]
+}
+
+resource "azuread_service_principal" "thhok8clusterappsp" {
+  application_id = azuread_application.thhok8clusterapp.application_id
+  owners = [data.azuread_client_config.current.object_id]
+}
+
+resource "azuread_service_principal_password" "thhok8clusterappsppw" {
+  service_principal_id = azuread_service_principal.thhok8clusterappsp.id
 }
 
 
