@@ -5,16 +5,26 @@ terraform {
     container_name = "thhotfstateblob"
     key = "terraform.tfstate"
   }
+  required_providers {
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.6.0"
+    }
+  }
 }
 
 provider "azurerm" {
   features {}
 }
 
+provider "azuread" {}
+
 provider "random" {
 }
 
 data "azurerm_client_config" "current" {}
+
+data "azuread_client_config" "current" {}
 
 resource "random_password" "thhopwd" {
   length  = 24
@@ -212,5 +222,12 @@ resource "azurerm_mssql_database" "db" {
     intilityManaged = "FALSE"
   }
 }
+
+# Kubernetes
+resource "azuread_application" "thhok8clusterapp" {
+  display_name = "thhok8clusterapp"
+  owners = [data.azuread_client_config.current.object_id]
+}
+
 
 
