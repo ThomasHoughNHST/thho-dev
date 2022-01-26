@@ -89,11 +89,14 @@ resource "azurerm_key_vault" "keyvault" {
     intilityImplementationGuid = "notSet",
     intilityManaged = "FALSE"
   }
-  access_policy {
+}
+
+resource "azurerm_key_vault_access_policy" "thhoowner" {
+  key_vault_id = azurerm_key_vault.keyvault.id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = "c8c603f5-95a2-4d06-8bc9-6d00c4dc325c"
 
-    key_permissions = [
+  key_permissions = [
       "Get",
       "List",
       "Update",
@@ -104,9 +107,8 @@ resource "azurerm_key_vault" "keyvault" {
       "Backup",
       "Restore",
       "Purge"
-    ]
-
-    secret_permissions = [
+  ]
+  secret_permissions = [
       "Get",
       "List",
       "Set",
@@ -115,9 +117,8 @@ resource "azurerm_key_vault" "keyvault" {
       "Backup",
       "Restore",
       "Purge"
-    ]
-
-    certificate_permissions = [
+  ]
+  certificate_permissions = [
       "Get",
       "List",
       "Update",
@@ -134,27 +135,73 @@ resource "azurerm_key_vault" "keyvault" {
       "SetIssuers",
       "DeleteIssuers",
       "Purge"
-    ]
-  }
-  access_policy {
+  ]
+}
+
+resource "azurerm_key_vault_access_policy" "thhocontributor" {
+  key_vault_id = azurerm_key_vault.keyvault.id
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = "198361a5-f57e-45d4-b4e8-13cd19df09b6"
 
-    key_permissions = [
+  key_permissions = [
       "Get",
       "List"
-    ]
+  ]
+  secret_permissions = [
+      "Get",
+      "List"
+  ]
+  certificate_permissions = [
+      "Get",
+      "List"
+  ]
+}
 
-    secret_permissions = [
-      "Get",
-      "List"
-    ]
+resource "azurerm_key_vault_access_policy" "thhouser" {
+  key_vault_id = azurerm_key_vault.keyvault.id
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_id = data.azurerm_client_config.current.object_id
 
-    certificate_permissions = [
+  key_permissions = [
       "Get",
-      "List"
-    ]
-  }
+      "List",
+      "Update",
+      "Create",
+      "Import",
+      "Delete",
+      "Recover",
+      "Backup",
+      "Restore",
+      "Purge"
+  ]
+  secret_permissions = [
+      "Get",
+      "List",
+      "Set",
+      "Delete",
+      "Recover",
+      "Backup",
+      "Restore",
+      "Purge"
+  ]
+  certificate_permissions = [
+      "Get",
+      "List",
+      "Update",
+      "Create",
+      "Import",
+      "Delete",
+      "Recover",
+      "Backup",
+      "Restore",
+      "ManageContacts",
+      "ManageIssuers",
+      "GetIssuers",
+      "ListIssuers",
+      "SetIssuers",
+      "DeleteIssuers",
+      "Purge"
+  ]
 }
 
 #resource "azurerm_key_vault_secret" "thhoconstr" {
