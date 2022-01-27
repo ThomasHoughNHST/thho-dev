@@ -33,6 +33,30 @@ spec:
 ---
 
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: azurefilepv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: mongodb-secret
+    secretNamespace: default
+    shareName: mongodb
+    readOnly: false
+  mountOptions:
+  - dir_mode=0755
+  - file_mode=0755
+  - uid=1000
+  - gid=1000
+  - mfsymlinks
+  - nobrl
+
+---
+
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mongopvc
@@ -44,3 +68,17 @@ spec:
       storage: 5Gi
   storageClassName: ''
   volumeName: mongopv
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurefilepvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5Gi
