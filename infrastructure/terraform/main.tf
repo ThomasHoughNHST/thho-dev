@@ -231,6 +231,7 @@ resource "azurerm_mssql_database" "db" {
 # Kubernetes
 #resource "azuread_group" "thhoaksadminadgroup" {
 #  display_name = "thho-aksadminadgroup"
+#  owners = [data.azuread_client_config.current.object_id]
 #  security_enabled = true
 #}
 
@@ -246,6 +247,57 @@ resource "azuread_service_principal" "thhok8clusterappsp" {
 
 resource "azuread_service_principal_password" "thhok8clusterappsppw" {
   service_principal_id = azuread_service_principal.thhok8clusterappsp.id
+}
+
+resource "azurerm_kubernetes_cluster" "computecluster" {
+  name                            = "thhocomputecluster"
+  location                        = azurerm_resource_group.resourcegroup.location
+  resource_group_name             = azurerm_resource_group.resourcegroup.name
+  dns_prefix                      = "thhocomputecluster-dns"
+  kubernetes_version              = "1.22.2"
+  api_server_authorized_ip_ranges = ["103.143.91.0/24", "188.95.246.0/24"]
+  tags                            = {
+    intilityImplementationGuid = "notSet",
+    intilityManaged            = "FALSE"
+  }
+
+  default_node_pool {
+    name                = "default"
+    vm_size             = "Standard_D2s_v4"
+    vnet_subnet_id      = azurerm_subnet.vnsubnet1.id
+    enable_auto_scaling = true
+    max_count           = 15
+    min_count           = 1
+    node_labels         = {
+      nodePool = "default"
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  addon_profile {
+    azure_policy {
+      enabled = true
+    }
+
+    aci_connector_linux {
+      enabled = false
+    }
+
+    http_application_routing {
+      enabled = false
+    }
+
+    kube_dashboard {
+      enabled = false
+    }
+
+    oms_agent {
+      enabled = false
+    }
+  }
 }
 
 
