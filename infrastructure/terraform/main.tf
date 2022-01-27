@@ -42,7 +42,7 @@ resource "random_password" "k8pw" {
 }
 
 resource "azurerm_resource_group" "resourcegroup" {
-  name          = "thho_resourcegroup"
+  name          = "thhoresourcegroup"
   location      = "West Europe"
   tags = {
     intilityImplementationGuid = "notSet",
@@ -83,8 +83,8 @@ resource "azurerm_storage_account" "filestorage" {
   }
 }
 
-resource "azurerm_storage_share" "inputs" {
-  name                 = "input-files"
+resource "azurerm_storage_share" "mongodbfiles" {
+  name                 = "mongodb"
   storage_account_name = azurerm_storage_account.filestorage.name
   quota                = 100
 }
