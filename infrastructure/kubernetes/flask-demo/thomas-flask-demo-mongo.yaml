@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: flask-mongo
 spec:
   selector:
     matchLabels:
-      app: mongo
+      app: flask-mongo
   template:
     metadata:
       labels:
-        app: mongo
+        app: flask-mongo
     spec:
       containers:
         - name: mongo
@@ -19,17 +19,17 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /Temp/db
-#          env:
-#            - name: MONGO_INITDB_ROOT_USERNAME
-#              valueFrom:
-#                secretKeyRef:
-#                  name: mongodb-secret
-#                  key: mongo-root-username
-#            - name: MONGO_INITDB_ROOT_PASSWORD
-#              valueFrom:
-#                secretKeyRef:
-#                  name: mongodb-secret
-#                  key: mongo-root-password
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongo-root-password
       volumes:
         - name: storage
           persistentVolumeClaim:
@@ -38,10 +38,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: flask-mongo
 spec:
   selector:
-    app: mongo
+    app: flask-mongo
   ports:
     - port: 27017
       targetPort: 27017
