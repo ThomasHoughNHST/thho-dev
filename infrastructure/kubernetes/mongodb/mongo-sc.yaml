@@ -37,22 +37,25 @@ kind: PersistentVolume
 metadata:
   name: azurefilepv
 spec:
+  storageClassName: ''
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  azureFile:
-    secretName: mongodb-secret
-    secretNamespace: default
-    shareName: mongodb
-    readOnly: false
+#  azureFile:
+#    secretName: mongodb-secret
+#    secretNamespace: default
+#    shareName: mongodb
+#    readOnly: false
   mountOptions:
-  - dir_mode=0755
-  - file_mode=0755
+  - dir_mode=0777
+  - file_mode=0777
   - uid=1000
   - gid=1000
   - mfsymlinks
   - nobrl
+  hostPath:
+    path: "/data/db"
 
 ---
 
@@ -78,7 +81,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: ""
+  storageClassName: ''
   resources:
     requests:
       storage: 5Gi
