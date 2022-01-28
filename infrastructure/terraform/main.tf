@@ -213,9 +213,9 @@ resource "azurerm_mssql_server" "server" {
 resource "azurerm_sql_active_directory_administrator" "server_add" {
   server_name         = azurerm_mssql_server.server.name
   resource_group_name = azurerm_resource_group.resourcegroup.name
-  login               = "S_Azure_NHST_Owner"
+  login               = "S_Azure_NHST_Contributor"
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  object_id           = data.azurerm_client_config.current.object_id
+  object_id           = "198361a5-f57e-45d4-b4e8-13cd19df09b6"
 }
 
 resource "azurerm_mssql_database" "db" {
