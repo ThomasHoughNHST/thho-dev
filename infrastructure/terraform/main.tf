@@ -230,8 +230,7 @@ resource "azurerm_mssql_database" "db" {
 
 # Kubernetes
 #resource "azuread_group" "thhoaksadminadgroup" {
-#  display_name = "thho-aksadminadgroup"
-#  owners = [data.azuread_client_config.current.object_id]
+#  display_name = "thhoaksadminadgroup"
 #  security_enabled = true
 #}
 
@@ -247,9 +246,10 @@ resource "azuread_service_principal" "thhok8clusterappsp" {
 
 resource "azuread_service_principal_password" "thhok8clusterappsppw" {
   service_principal_id = azuread_service_principal.thhok8clusterappsp.id
+#  value = random_password.k8pw.result
 }
 
-resource "azurerm_kubernetes_cluster" "computecluster" {
+resource "azurerm_kubernetes_cluster" "thhocomputecluster" {
   name                            = "thhocomputecluster"
   location                        = azurerm_resource_group.resourcegroup.location
   resource_group_name             = azurerm_resource_group.resourcegroup.name
@@ -276,6 +276,11 @@ resource "azurerm_kubernetes_cluster" "computecluster" {
   identity {
     type = "SystemAssigned"
   }
+
+#  service_principal {
+#    client_id = azuread_application.thhok8clusterapp.application_id
+#    client_secret = azuread_service_principal_password.thhok8clusterappsppw.value
+#  }
 
   addon_profile {
     azure_policy {

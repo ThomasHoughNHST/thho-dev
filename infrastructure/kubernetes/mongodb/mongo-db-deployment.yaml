@@ -14,14 +14,18 @@ spec:
       labels:
         app: mongodb
     spec:
+      volumes:
+      - name: azure
+        persistentVolumeClaim:
+          claimName: testpvc
       containers:
       - name: mongodb
         image: mongo
         ports:
         - containerPort: 27017
-#        volumeMounts:
-#          - name: azure
-#            mountPath: "/data/db"
+        volumeMounts:
+        - mountPath: "/data/db"
+          name: azure
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
@@ -33,10 +37,7 @@ spec:
             secretKeyRef:
               name: mongodb-secret
               key: mongo-root-password
-      volumes:
-      - name: azure
-        persistentVolumeClaim:
-         claimName: azurefilepvc
+
 ---
 apiVersion: v1
 kind: Service

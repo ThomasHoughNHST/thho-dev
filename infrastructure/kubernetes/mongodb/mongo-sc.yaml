@@ -4,9 +4,9 @@ metadata:
   name: mongosc
 provisioner: file.csi.azure.com
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 parameters:
-  storageaccounttype: Premium_LRS
-  kind: Managed
+  storageaccounttype: Standard_LRS
 
 ---
 
@@ -18,7 +18,7 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   storageClassName: ''
   azureFile:
     secretName: mongodb-secret
@@ -33,27 +33,32 @@ spec:
 ---
 
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolumeClaim
 metadata:
-  name: azurefilepv
+  name: mongopvc
 spec:
-  storageClassName: ''
-  capacity:
-    storage: 5Gi
   accessModes:
     - ReadWriteMany
-#  azureFile:
-#    secretName: mongodb-secret
-#    secretNamespace: default
-#    shareName: mongodb
-#    readOnly: false
-  mountOptions:
-  - dir_mode=0777
-  - file_mode=0777
-  - uid=1000
-  - gid=1000
-  - mfsymlinks
-  - nobrl
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ''
+#  volume_name: mongopv
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: testpv
+  labels:
+    type: local
+spec:
+  storageClassName: mongosc
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
   hostPath:
     path: "/data/db"
 
@@ -62,26 +67,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mongopvc
+  name: testpvc
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 5Gi
-  storageClassName: ''
-  volumeName: mongopv
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: azurefilepvc
-spec:
+  storageClassName: mongosc
   accessModes:
     - ReadWriteMany
-  storageClassName: ''
   resources:
     requests:
-      storage: 5Gi
+      storage: 3Gi
