@@ -43,7 +43,6 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: ''
-#  volume_name: mongopv
 
 ---
 
