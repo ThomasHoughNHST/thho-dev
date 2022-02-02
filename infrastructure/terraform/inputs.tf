@@ -1,0 +1,1 @@
+variable "nhst_owner_group_object_id" {}
