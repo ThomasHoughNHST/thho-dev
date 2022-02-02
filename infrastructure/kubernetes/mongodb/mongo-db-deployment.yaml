@@ -15,9 +15,9 @@ spec:
         app: mongodb
     spec:
       volumes:
-      - name: azure
-        persistentVolumeClaim:
-          claimName: testpvc
+        - name: volume
+          persistentVolumeClaim:
+            claimName: testpvc
       containers:
       - name: mongodb
         image: mongo
@@ -25,7 +25,7 @@ spec:
         - containerPort: 27017
         volumeMounts:
         - mountPath: "/data/db"
-          name: azure
+          name: volume
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
