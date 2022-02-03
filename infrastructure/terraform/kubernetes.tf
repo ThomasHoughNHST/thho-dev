@@ -13,7 +13,7 @@ resource "azurerm_kubernetes_cluster" "thhocomputecluster" {
   default_node_pool {
     name                = "default"
     vm_size             = "Standard_D2s_v4"
-    vnet_subnet_id      = azurerm_subnet.vnsubnet1.id
+    vnet_subnet_id      = azurerm_subnet.thhosubnet1.id
     enable_auto_scaling = true
     max_count           = 15
     min_count           = 1

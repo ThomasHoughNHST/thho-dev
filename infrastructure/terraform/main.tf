@@ -36,6 +36,11 @@ resource "random_password" "k8pw" {
   special = true
 }
 
+resource "random_password" "posgrespwd" {
+  length  = 24
+  special = true
+}
+
 resource "azurerm_resource_group" "resourcegroup" {
   name          = "thhoresourcegroup"
   location      = "West Europe"
