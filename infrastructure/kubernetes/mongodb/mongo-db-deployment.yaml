@@ -17,14 +17,14 @@ spec:
       volumes:
         - name: volume
           persistentVolumeClaim:
-            claimName: testpvc
+            claimName: azure-managed-disk
       containers:
       - name: mongodb
         image: mongo
         ports:
         - containerPort: 27017
         volumeMounts:
-        - mountPath: "/data/db"
+        - mountPath: "/usr/local/data/db"
           name: volume
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
