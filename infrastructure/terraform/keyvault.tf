@@ -1,5 +1,5 @@
-resource "azurerm_key_vault" "keyvault" {
-  name                        = "thhokeyvault"
+resource "azurerm_key_vault" "houghkeyvault" {
+  name                        = "houghkeyvault"
   location                    = azurerm_resource_group.resourcegroup.location
   resource_group_name         = azurerm_resource_group.resourcegroup.name
   tenant_id                   = data.azurerm_client_config.current.tenant_id
@@ -60,12 +60,12 @@ resource "azurerm_key_vault" "keyvault" {
 
 resource "azurerm_key_vault_secret" "thhoconstr" {
   name         = "thho-sql-db-connection-string"
-  value        = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:${azurerm_mssql_server.server.fully_qualified_domain_name},1433;Database=${azurerm_mssql_database.db.name};Uid=${azurerm_mssql_server.server.administrator_login};Pwd=${random_password.sqlserverpw.result};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-  key_vault_id = azurerm_key_vault.keyvault.id
+  value        = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:${azurerm_mssql_server.houghserver.fully_qualified_domain_name},1433;Database=${azurerm_mssql_database.houghdb.name};Uid=${azurerm_mssql_server.houghserver.administrator_login};Pwd=${random_password.sqlserverpw.result};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+  key_vault_id = azurerm_key_vault.houghkeyvault.id
 }
 
 resource "azurerm_key_vault_secret" "thhosecret" {
-  key_vault_id = azurerm_key_vault.keyvault.id
+  key_vault_id = azurerm_key_vault.houghkeyvault.id
   name         = "PWD"
-  value        = random_password.thhopwd.result
+  value        = random_password.houghpwd.result
 }

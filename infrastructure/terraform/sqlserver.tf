@@ -1,8 +1,8 @@
-resource "azurerm_mssql_server" "server" {
-  name                         = "thhoserver"
+resource "azurerm_mssql_server" "houghserver" {
+  name                         = "houghserver"
   location                     = azurerm_resource_group.resourcegroup.location
   resource_group_name          = azurerm_resource_group.resourcegroup.name
-  administrator_login          = "thomasadmin"
+  administrator_login          = "houghadmin"
   administrator_login_password = random_password.sqlserverpw.result
   version                      = "12.0"
   tags = {
@@ -12,16 +12,16 @@ resource "azurerm_mssql_server" "server" {
 }
 
 resource "azurerm_sql_active_directory_administrator" "server_add" {
-  server_name         = azurerm_mssql_server.server.name
+  server_name         = azurerm_mssql_server.houghserver.name
   resource_group_name = azurerm_resource_group.resourcegroup.name
   login               = "S_Azure_NHST_Contributor"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = var.nhst_owner_group_object_id
 }
 
-resource "azurerm_mssql_database" "db" {
-  name      = "thhosqldatabase"
-  server_id = azurerm_mssql_server.server.id
+resource "azurerm_mssql_database" "houghdb" {
+  name      = "houghdb"
+  server_id = azurerm_mssql_server.houghserver.id
   max_size_gb = 1
   tags = {
     intilityImplementationGuid = "notSet",

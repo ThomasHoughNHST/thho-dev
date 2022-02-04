@@ -1,5 +1,5 @@
-resource "azurerm_postgresql_server" "thhoposgres" {
-  name                = "thhoposgres"
+resource "azurerm_postgresql_server" "houghposgres" {
+  name                = "houghposgres"
   location            = azurerm_resource_group.resourcegroup.location
   resource_group_name = azurerm_resource_group.resourcegroup.name
   sku_name = "GP_Gen5_2"
@@ -19,7 +19,7 @@ resource "azurerm_postgresql_server" "thhoposgres" {
 resource "azurerm_postgresql_firewall_rule" "nhstofficefw" {
   name                = "nhst-office"
   resource_group_name = azurerm_resource_group.resourcegroup.name
-  server_name         = azurerm_postgresql_server.thhoposgres.name
+  server_name         = azurerm_postgresql_server.houghposgres.name
   start_ip_address    = "31.45.107.203"
   end_ip_address      = "31.45.107.203"
 }
@@ -27,7 +27,7 @@ resource "azurerm_postgresql_firewall_rule" "nhstofficefw" {
 resource "azurerm_postgresql_virtual_network_rule" "networkrule" {
   name                                 = "postgresql-vnet-rule"
   resource_group_name                  = azurerm_resource_group.resourcegroup.name
-  server_name                          = azurerm_postgresql_server.thhoposgres.name
-  subnet_id                            = azurerm_subnet.thhosubnet1.id
+  server_name                          = azurerm_postgresql_server.houghposgres.name
+  subnet_id                            = azurerm_subnet.houghsubnet1.id
   ignore_missing_vnet_service_endpoint = true
 }

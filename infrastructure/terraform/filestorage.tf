@@ -1,5 +1,5 @@
-resource "azurerm_storage_account" "filestorage" {
-  name                     = "thhofilestorage"
+resource "azurerm_storage_account" "houghsa" {
+  name                     = "houghsa"
   resource_group_name      = azurerm_resource_group.resourcegroup.name
   location                 = azurerm_resource_group.resourcegroup.location
   account_tier             = "Standard"
@@ -13,18 +13,18 @@ resource "azurerm_storage_account" "filestorage" {
 
 resource "azurerm_storage_share" "mongodbfiles" {
   name                 = "mongodb"
-  storage_account_name = azurerm_storage_account.filestorage.name
+  storage_account_name = azurerm_storage_account.houghsa.name
   quota                = 100
 }
 
 resource "azurerm_storage_share" "airflowlogs" {
   name                 = "airflow-logs"
-  storage_account_name = azurerm_storage_account.filestorage.name
+  storage_account_name = azurerm_storage_account.houghsa.name
   quota                = 100
 }
 
 resource "azurerm_storage_share" "airflowdags" {
   name                 = "airflow-dags"
-  storage_account_name = azurerm_storage_account.filestorage.name
+  storage_account_name = azurerm_storage_account.houghsa.name
   quota                = 50
 }

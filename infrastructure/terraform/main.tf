@@ -21,7 +21,7 @@ data "azurerm_client_config" "current" {}
 
 data "azuread_client_config" "current" {}
 
-resource "random_password" "thhopwd" {
+resource "random_password" "houghpwd" {
   length  = 24
   special = false
 }
@@ -42,7 +42,7 @@ resource "random_password" "posgrespwd" {
 }
 
 resource "azurerm_resource_group" "resourcegroup" {
-  name          = "thhoresourcegroup"
+  name          = "houghrg"
   location      = "West Europe"
   tags = {
     intilityImplementationGuid = "notSet",
