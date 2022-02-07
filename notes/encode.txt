@@ -1,0 +1,1 @@
+echo -n "STRING" | base64
