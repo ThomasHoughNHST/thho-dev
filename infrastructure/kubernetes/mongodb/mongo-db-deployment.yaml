@@ -27,7 +27,7 @@ spec:
         - containerPort: 27017
         volumeMounts:
               - name: azure
-                mountPath: /mnt/azure
+                mountPath: /data/db
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:

@@ -58,11 +58,11 @@ resource "azurerm_key_vault" "houghkeyvault" {
   }
 }
 
-resource "azurerm_key_vault_secret" "thhoconstr" {
-  name         = "thho-sql-db-connection-string"
-  value        = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:${azurerm_mssql_server.houghserver.fully_qualified_domain_name},1433;Database=${azurerm_mssql_database.houghdb.name};Uid=${azurerm_mssql_server.houghserver.administrator_login};Pwd=${random_password.sqlserverpw.result};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-  key_vault_id = azurerm_key_vault.houghkeyvault.id
-}
+#resource "azurerm_key_vault_secret" "thhoconstr" {
+#  name         = "thho-sql-db-connection-string"
+#  value        = "Driver={ODBC Driver 17 for SQL Server};Server=tcp:${azurerm_mssql_server.houghserver.fully_qualified_domain_name},1433;Database=${azurerm_mssql_database.houghdb.name};Uid=${azurerm_mssql_server.houghserver.administrator_login};Pwd=${random_password.sqlserverpw.result};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+#  key_vault_id = azurerm_key_vault.houghkeyvault.id
+#}
 
 resource "azurerm_key_vault_secret" "thhosecret" {
   key_vault_id = azurerm_key_vault.houghkeyvault.id

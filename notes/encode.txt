@@ -1,1 +1,1 @@
-echo -n "STRING" | base64
+echo -n 9mgakPPO1wofSDABTXyuoQrcni6fW1HrLbR4pOWAlOsdCRRwuhghNK47j1oeVfzNiLq50AVoeCTImrWrjtuYiw== | base64
