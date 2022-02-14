@@ -19,35 +19,39 @@ resource "azurerm_storage_share" "mongodbfiles" {
     id = "mongodbacl"
     access_policy {
       permissions = "rwdl"
+      start       = "2022-02-10T00:00:00.0000000Z"
+      expiry      = "2023-02-10T00:00:00.0000000Z"
     }
   }
   acl {
     id = azuread_service_principal.houghk8appsp.id
     access_policy {
       permissions = "rwdl"
+      start       = "2022-02-10T00:00:00.0000000Z"
+      expiry      = "2023-02-10T00:00:00.0000000Z"
     }
   }
 }
 
-#resource "azurerm_key_vault_secret" "storageaccountname" {
-#  name         = "houghsa-storage-account-name"
-#  value        = azurerm_storage_account.houghsa.name
-#  key_vault_id = azurerm_key_vault.houghkeyvault.id
-#}
+resource "azurerm_key_vault_secret" "storageaccountname" {
+  name         = "houghsa-storage-account-name"
+  value        = azurerm_storage_account.houghsa.name
+  key_vault_id = azurerm_key_vault.houghkeyvault.id
+}
 
-#resource "azurerm_key_vault_secret" "storageaccountkey" {
-#  name         = "houghsa-storage-account-access-key"
-#  value        = azurerm_storage_account.houghsa.primary_access_key
-#  key_vault_id = azurerm_key_vault.houghkeyvault.id
-#}
+resource "azurerm_key_vault_secret" "storageaccountkey" {
+  name         = "houghsa-storage-account-access-key"
+  value        = azurerm_storage_account.houghsa.primary_access_key
+  key_vault_id = azurerm_key_vault.houghkeyvault.id
+}
 
-#resource "azurerm_storage_account_network_rules" "mongonr" {
-#  storage_account_id = azurerm_storage_account.houghsa.id
-#  default_action             = "Allow"
-#  ip_rules                   = ["127.0.0.1"]
-#  virtual_network_subnet_ids = [azurerm_subnet.houghsubnet1.id]
-#  bypass                     = ["Metrics"]
-#}
+resource "azurerm_storage_account_network_rules" "mongonr" {
+  storage_account_id = azurerm_storage_account.houghsa.id
+  default_action             = "Allow"
+  ip_rules                   = ["127.0.0.1"]
+  virtual_network_subnet_ids = [azurerm_subnet.houghsubnet1.id]
+  bypass                     = ["Metrics"]
+}
 
 resource "azurerm_storage_share_directory" "data" {
   name                 = "data"

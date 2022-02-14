@@ -16,10 +16,8 @@ spec:
     spec:
       volumes:
         - name: azure
-          azureFile:
-            secretName: mongodb-secret
-            shareName: mongodb
-            readOnly: false
+          persistentVolumeClaim:
+            claimName: mongopvc
       containers:
       - name: mongodb
         image: mongo

@@ -20,15 +20,17 @@ spec:
   accessModes:
   - ReadWriteMany
   storageClassName: ''
-  azureFile:
-    secretName: mongodb-secret
-    shareName: mongodb-files
-    readOnly: false
-  mountOptions:
-  - dir_mode=0777
-  - file_mode=0777
-  - uid=1000
-  - gid=1000
+#  azureFile:
+#    secretName: mongodb-secret
+#    shareName: mongodb-files
+#    readOnly: false
+#  mountOptions:
+#  - dir_mode=0777
+#  - file_mode=0777
+#  - uid=1000
+#  - gid=1000
+  hostPath:
+    path: /data/db
 
 ---
 
@@ -43,3 +45,4 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: ''
+  volumeName: mongopv
