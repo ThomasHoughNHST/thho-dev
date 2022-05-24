@@ -3,7 +3,7 @@ resource "azurerm_kubernetes_cluster" "houghk8" {
   location                        = azurerm_resource_group.resourcegroup.location
   resource_group_name             = azurerm_resource_group.resourcegroup.name
   dns_prefix                      = "houghk8-dns"
-  kubernetes_version              = "1.22.2"
+  kubernetes_version              = "1.23.3"
   api_server_authorized_ip_ranges = ["103.143.91.0/24", "188.95.246.0/24"]
   tags                            = {
     intilityImplementationGuid = "notSet",
