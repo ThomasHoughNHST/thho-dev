@@ -15,7 +15,7 @@ def run_sub_step():
 
 
 def run_customer_step():
-    url = 'http://10.242.2.188/dn/CustomerServices/CustomerReservation.svc?wsdl'
+    url = 'http://10.242.2.188/dn/Customer/CustomerReservationService.svc?WSDL'
     client = Client(url)
     print(url)
     result = client.service.GetCustomerReservations(
@@ -25,4 +25,4 @@ def run_customer_step():
 
 
 if __name__ == '__main__':
-    run_sub_step()
+    run_customer_step()
