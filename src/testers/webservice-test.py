@@ -18,7 +18,9 @@ def run_customer_step():
     url = 'http://10.242.2.188/dn/Customer/CustomerReservationService.svc?WSDL'
     client = Client(url)
     print(url)
-    result = client.service.GetCustomerReservations(
+    result = client.service.CreateCustomerReservation(
+        CustomerReservation={'TitleCode': 'DN',
+                             'ReservationCode': 'XSMSR'},
         CustomerNumber=1118500
     )
     print(result)
