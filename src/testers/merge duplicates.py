@@ -32,6 +32,7 @@ def merge_duplicates(input_dataframe, join_key):
                           'row_number_y_y': 'row_number_new'},
                  inplace=True)
     step2 = step2.drop_duplicates()
+    print(step2)
     step3 = pd.merge(input_dataframe, step1,
                      how='left',
                      on=[join_key, 'row_number'])
@@ -81,9 +82,7 @@ df['row_number'] = df.groupby('customer_id')['valid_from_date'].rank(method='fir
 df['customer_id'] = pd.to_numeric(df['customer_id'], downcast='integer')
 df['copies'] = pd.to_numeric(df['copies'], downcast='integer')
 df['row_number'] = pd.to_numeric(df['row_number'], downcast='integer')
-print(df)
 df = merge_duplicates(input_dataframe=df, join_key='customer_id')
-print(df)
 
 
 

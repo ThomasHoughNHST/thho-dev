@@ -26,5 +26,16 @@ def run_customer_step():
     print(result)
 
 
+def get_subscription_elements():
+    url = 'http://10.242.2.188/dn/InfoWebXMLWebService.asmx?WSDL'
+    client = Client(url)
+    result = client.service.GetSubscriptionElements(
+        customerNumber=1118500,
+        startDate='2022-07-07T00:00:00',
+        endDate='2022-07-07T00:00:00'
+    )
+    print(result)
+
+
 if __name__ == '__main__':
-    run_customer_step()
+    get_subscription_elements()
